@@ -8,13 +8,13 @@ const EditView = (props) => {
 		<div className='wrapper'>
 			<Title title='Edit Product' />
 			<Form
-				editProductTitle={props.editTitle}
-				editProductDescription={props.editDescription}
-				editProductPrice={props.editPrice}
+				placeholderTitle={props.editTitle}
+				placeholderDescription={props.editDescription}
+				placeholderPrice={props.editPrice}
 				onSave={props.onSave}
-				onCreateProductTitle={props.onCreateProductTitle}
-				onCreateProductDescription={props.onCreateProductDescription}
-				onCreateProductPrice={props.onCreateProductPrice}
+				onChangeProductTitle={props.onEditProductTitle}
+				onChangeProductDescription={props.onEditProductDescription}
+				onChangeProductPrice={props.onEditProductPrice}
 			/>
 		</div>
 	);

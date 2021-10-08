@@ -9,22 +9,22 @@ const Form = (props) => {
 				className='creatingFormField'
 				type='text'
 				value={props.productTitle}
-				onChange={(event) => props.onCreateProductTitle(event)}
-				placeholder={props.editProductTitle}
+				onChange={(event) => props.onChangeProductTitle(event)}
+				placeholder={props.placeholderTitle}
 			/>
 			<input
 				className='creatingFormField'
 				type='text'
-				placeholder={props.editProductDescription}
+				placeholder={props.placeholderDescription}
 				value={props.productDescription}
-				onChange={(event) => props.onCreateProductDescription(event)}
+				onChange={(event) => props.onChangeProductDescription(event)}
 			/>
 			<input
 				className='creatingFormField'
 				type='text'
 				value={props.productPrice}
-				onChange={(event) => props.onCreateProductPrice(event)}
-				placeholder={props.editProductPrice}
+				onChange={(event) => props.onChangeProductPrice(event)}
+				placeholder={props.placeholderPrice}
 			/>
 			<Button className='buttonSave' title='Save' />
 		</form>

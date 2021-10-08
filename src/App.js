@@ -40,19 +40,31 @@ const App = () => {
 		const newProductList = products.filter((product) => product.id !== key);
 		setProductsState(newProductList);
 	};
+
 	const onAdd = (event, key) => {
 		event.preventDefault();
-		const basketProducts = products.filter((product) => product.id === key);
-		setBasket(basketProducts);
-		// setIsAdd(false);
-		console.log(basketProducts);
+
+		products.find((product) => {
+			if (product.id === key) {
+				setBasket([
+					...basket,
+					{
+						title: product.title,
+						price: product.price,
+						description: product.description,
+						inCart: true,
+						id: product.id,
+					},
+				]);
+			}
+		});
 	};
 
 	const onCreateView = (event) => {
 		event.preventDefault();
 		setScreen('create');
 	};
-	const onSave = (event) => {
+	const createNewProduct = (event) => {
 		event.preventDefault();
 		setProductsState([
 			...products,
@@ -65,6 +77,25 @@ const App = () => {
 			},
 		]);
 
+		setScreen('main');
+	};
+	const editProduct = (event) => {
+		event.preventDefault();
+		const newProductList = products.map((item) =>
+			item.title === editTitle
+				? {
+						title: newProductTitle ? newProductTitle : editTitle,
+						price: newProductPrice ? newProductPrice : editPrice,
+						description: newProductDescription
+							? newProductDescription
+							: editDescription,
+						id: item.id,
+						inCart: item.inCart,
+				  }
+				: item,
+		);
+
+		setProductsState(newProductList);
 		setScreen('main');
 	};
 
@@ -80,6 +111,19 @@ const App = () => {
 		event.preventDefault();
 		setNewProductPrice(event.target.value);
 	};
+	const onEditProductTitle = (event) => {
+		event.preventDefault();
+		setNewProductTitle(event.target.value);
+	};
+	const onEditProductDescription = (event) => {
+		event.preventDefault();
+		setNewProductDescription(event.target.value);
+	};
+	const onEditProductPrice = (event) => {
+		event.preventDefault();
+		setNewProductPrice(event.target.value);
+	};
+
 	let content;
 
 	if (screen === 'main') {
@@ -101,10 +145,10 @@ const App = () => {
 				editTitle={editTitle}
 				editDescription={editDescription}
 				editPrice={editPrice}
-				onSave={onSave}
-				onCreateProductTitle={onCreateProductTitle}
-				onCreateProductDescription={onCreateProductDescription}
-				onCreateProductPrice={onCreateProductPrice}
+				onSave={editProduct}
+				onEditProductTitle={onEditProductTitle}
+				onEditProductDescription={onEditProductDescription}
+				onEditProductPrice={onEditProductPrice}
 			/>
 		);
 	}
@@ -112,7 +156,7 @@ const App = () => {
 	if (screen === 'create') {
 		content = (
 			<CreateView
-				onSave={onSave}
+				onSave={createNewProduct}
 				onCreateProductTitle={onCreateProductTitle}
 				onCreateProductDescription={onCreateProductDescription}
 				onCreateProductPrice={onCreateProductPrice}

@@ -8,13 +8,13 @@ const CreateView = (props) => {
 		<div className='wrapper'>
 			<Title title='Create Product' />
 			<Form
-				productTitle='title'
-				productDescription='description'
-				productPrice='price'
+				placeholderTitle='title'
+				placeholderDescription='description'
+				placeholderPrice='price'
 				onSave={props.onSave}
-				onCreateProductTitle={props.onCreateProductTitle}
-				onCreateProductDescription={props.onCreateProductDescription}
-				onCreateProductPrice={props.onCreateProductPrice}
+				onChangeProductTitle={props.onCreateProductTitle}
+				onChangeProductDescription={props.onCreateProductDescription}
+				onChangeProductPrice={props.onCreateProductPrice}
 			/>
 		</div>
 	);
