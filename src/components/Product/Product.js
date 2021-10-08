@@ -2,16 +2,21 @@ import React from 'react';
 import './Product.css';
 import Button from '../Button/Button';
 
-const Product = ({ key, title, description, price, onEdit }) => {
+const Product = (props) => {
 	return (
-		<div className='product' key={key}>
-			<div className='productTitle'>{title}</div>
-			<div className='productDescription'>{description}</div>
-			<div className='productPrice'>{price}</div>
+		<div className='product'>
+			<h1 className='productTitle'>{props.title}</h1>
+			<p className='productDescription'>{props.description}</p>
+			<p className='productPrice'>{props.price} $</p>
 			<div className='productButtons'>
-				<Button className='buttoneEdit' title='Edit' onClick={onEdit}/>
-				<Button className='buttonDel' title='Del' />
-				<Button className='buttonEdit' title='Add' />
+				<Button className='buttonEdit' title='Edit' onClick={props.onEdit} />
+				<Button className='buttonDel' title='Del' onClick={props.onDel} />
+				<Button
+					className='buttonAdd'
+					title='Add to'
+					active={props.active}
+					onClick={props.onAdd}
+				/>
 			</div>
 		</div>
 	);

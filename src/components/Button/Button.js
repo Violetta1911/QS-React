@@ -2,7 +2,11 @@ import React from 'react';
 import './Button.css';
 
 const Button = ({ title, onClick, className }) => {
-	return <Button className={className} onClick= {onClick}>{title}</Button>;
+	return (
+		<button className={className} onClick={onClick}>
+			{title}
+		</button>
+	);
 };
 
 export default Button;
