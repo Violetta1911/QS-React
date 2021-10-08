@@ -1,0 +1,11 @@
+.product {
+    width: 400px;
+    height: 400px;
+    padding: 5px;
+    border: solid 2px black;
+    margin-bottom: 20px;
+}
+.productButtons{
+    display: flex;
+    justify-content: space-around;
+}

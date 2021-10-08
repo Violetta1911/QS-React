@@ -7,6 +7,16 @@ const App = () => {
 	const [screen, setScreen] = useState('main');
 	const [products, setProductsState] = useState([]);
 
+	const onEdit = (event) => {
+		event.preventDefault();
+		setScreen('edit');
+	};
+	// const onDel = (event, key) => {
+	// 	event.preventDefault();
+	// 	const newProductList = products.filter((product) => product.id !== key);
+	// 	setProductsState(newProductList);
+	// };
+
 	useEffect(() => {
 		getProducts();
 	}, []);
@@ -17,7 +27,8 @@ const App = () => {
 		setProductsState(data);
 	}
 	console.log(products);
-	let content = <MainView />;
+
+	let content = <MainView products={products} onEdit={onEdit}/>;
 
 	if (screen === 'edit') {
 		content = <EditView />;

@@ -1,0 +1,8 @@
+.buttonEdit,
+ .buttonDel,
+ .buttonAdd {
+    width: 100px;
+    padding: 5px;
+    border: solid 1px black;
+    border-radius: 5px;
+}
