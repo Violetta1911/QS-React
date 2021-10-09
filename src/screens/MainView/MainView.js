@@ -10,7 +10,8 @@ const MainView = ({ products, onEdit, onDel, onAdd, onCreate }) => {
 			<div className='productList'>
 				{products.map((product) => (
 					<Product
-						className='productButtons'
+						product={product}
+						buttonsClassName='productButtons'
 						key={product.id}
 						title={product.title}
 						description={product.description}

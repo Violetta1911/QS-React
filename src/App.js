@@ -79,6 +79,7 @@ const App = () => {
 	const onAdd = (event, key) => {
 		event.preventDefault();
 		addToBasket(key);
+		console.log(basket);
 		setScreen('cart');
 	};
 
@@ -120,6 +121,7 @@ const App = () => {
 		event.preventDefault();
 		setNewProductPrice(event.target.value);
 	};
+
 	const editProductTitle = (event) => {
 		event.preventDefault();
 		setNewProductTitle(event.target.value);
