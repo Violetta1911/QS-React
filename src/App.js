@@ -22,7 +22,8 @@ const App = () => {
 
 	async function getProducts() {
 		const response = await fetch('http://localhost:3000/products');
-		const data = await response.json();
+		let data = await response.json();
+		data.map((item) => (item.isAdd = false));
 		setProducts(data);
 	}
 
@@ -44,8 +45,10 @@ const App = () => {
 						description: product.description,
 						inCart: true,
 						id: product.id,
+						isAdd: true,
 					},
 				]);
+				product.isAdd = true;
 			}
 		});
 	};
@@ -79,8 +82,6 @@ const App = () => {
 	const onAdd = (event, key) => {
 		event.preventDefault();
 		addToBasket(key);
-		console.log(basket);
-		setScreen('cart');
 	};
 
 	const onCreate = (event) => {
@@ -108,6 +109,7 @@ const App = () => {
 		setProducts(updetedProducts);
 		setScreen('main');
 	};
+	const onGoToBasket = (event) => setScreen('cart');
 
 	const onCreateProductTitle = (event) => {
 		event.preventDefault();
@@ -145,6 +147,7 @@ const App = () => {
 				onDel={onDel}
 				onAdd={onAdd}
 				onCreate={onCreate}
+				onGoToBasket={onGoToBasket}
 			/>
 		);
 	}
