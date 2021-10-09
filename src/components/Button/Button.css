@@ -8,7 +8,7 @@
     background-color: rgb(37, 171, 243);
 }
 
-.buttonCreate, .buttonSave {
+.buttonCreate, .buttonSave, .deleteBasket {
     width: 300px;
     padding: 20px;
     border-radius: 20px;

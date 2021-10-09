@@ -3,12 +3,12 @@ import './App.css';
 import MainView from './screens/MainView/MainView';
 import EditView from './screens/EditView/EditView';
 import CreateView from './screens/CreatView/CreateView';
+import CartView from './screens/CartView/CartView';
 
 const App = () => {
 	const [screen, setScreen] = useState('main');
-	const [products, setProductsState] = useState([]);
+	const [products, setProducts] = useState([]);
 	const [basket, setBasket] = useState([]);
-	const [isAdd, setIsAdd] = useState(true);
 	const [newProductTitle, setNewProductTitle] = useState('');
 	const [newProductDescription, setNewProductDescription] = useState('');
 	const [newProductPrice, setNewProductPrice] = useState('');
@@ -23,27 +23,17 @@ const App = () => {
 	async function getProducts() {
 		const response = await fetch('http://localhost:3000/products');
 		const data = await response.json();
-		setProductsState(data);
+		setProducts(data);
 	}
 
-	const onEdit = (event, key) => {
-		event.preventDefault();
+	const createEditForm = (key) => {
 		const editProduct = products.find((item) => item.id === key);
 		setEditTitle(editProduct.title);
 		setEditDescription(editProduct.description);
 		setEditPrice(editProduct.price);
-		setScreen('edit');
 	};
 
-	const onDel = (event, key) => {
-		event.preventDefault();
-		const newProductList = products.filter((product) => product.id !== key);
-		setProductsState(newProductList);
-	};
-
-	const onAdd = (event, key) => {
-		event.preventDefault();
-
+	const addToBasket = (key) => {
 		products.find((product) => {
 			if (product.id === key) {
 				setBasket([
@@ -60,13 +50,46 @@ const App = () => {
 		});
 	};
 
-	const onCreateView = (event) => {
+	const updetedProducts = products.map((item) =>
+		item.title === editTitle
+			? {
+					title: newProductTitle ? newProductTitle : editTitle,
+					price: newProductPrice ? newProductPrice : editPrice,
+					description: newProductDescription
+						? newProductDescription
+						: editDescription,
+					id: item.id,
+					inCart: item.inCart,
+			  }
+			: item,
+	);
+
+	const onEdit = (event, key) => {
+		event.preventDefault();
+		createEditForm(key);
+		setScreen('edit');
+	};
+
+	const onDel = (event, key) => {
+		event.preventDefault();
+		const newProductList = products.filter((product) => product.id !== key);
+		setProducts(newProductList);
+	};
+
+	const onAdd = (event, key) => {
+		event.preventDefault();
+		addToBasket(key);
+		setScreen('cart');
+	};
+
+	const onCreate = (event) => {
 		event.preventDefault();
 		setScreen('create');
 	};
-	const createNewProduct = (event) => {
+
+	const saveNewProduct = (event) => {
 		event.preventDefault();
-		setProductsState([
+		setProducts([
 			...products,
 			{
 				title: newProductTitle,
@@ -81,21 +104,7 @@ const App = () => {
 	};
 	const editProduct = (event) => {
 		event.preventDefault();
-		const newProductList = products.map((item) =>
-			item.title === editTitle
-				? {
-						title: newProductTitle ? newProductTitle : editTitle,
-						price: newProductPrice ? newProductPrice : editPrice,
-						description: newProductDescription
-							? newProductDescription
-							: editDescription,
-						id: item.id,
-						inCart: item.inCart,
-				  }
-				: item,
-		);
-
-		setProductsState(newProductList);
+		setProducts(updetedProducts);
 		setScreen('main');
 	};
 
@@ -111,15 +120,15 @@ const App = () => {
 		event.preventDefault();
 		setNewProductPrice(event.target.value);
 	};
-	const onEditProductTitle = (event) => {
+	const editProductTitle = (event) => {
 		event.preventDefault();
 		setNewProductTitle(event.target.value);
 	};
-	const onEditProductDescription = (event) => {
+	const editProductDescription = (event) => {
 		event.preventDefault();
 		setNewProductDescription(event.target.value);
 	};
-	const onEditProductPrice = (event) => {
+	const editProductPrice = (event) => {
 		event.preventDefault();
 		setNewProductPrice(event.target.value);
 	};
@@ -133,8 +142,7 @@ const App = () => {
 				onEdit={onEdit}
 				onDel={onDel}
 				onAdd={onAdd}
-				onCreateView={onCreateView}
-				active={isAdd}
+				onCreate={onCreate}
 			/>
 		);
 	}
@@ -146,17 +154,21 @@ const App = () => {
 				editDescription={editDescription}
 				editPrice={editPrice}
 				onSave={editProduct}
-				onEditProductTitle={onEditProductTitle}
-				onEditProductDescription={onEditProductDescription}
-				onEditProductPrice={onEditProductPrice}
+				onChangeProductTitle={editProductTitle}
+				onChangeProductDescription={editProductDescription}
+				onChangeProductPrice={editProductPrice}
 			/>
 		);
+	}
+
+	if (screen === 'cart') {
+		content = <CartView basket={basket} />;
 	}
 
 	if (screen === 'create') {
 		content = (
 			<CreateView
-				onSave={createNewProduct}
+				onSave={saveNewProduct}
 				onCreateProductTitle={onCreateProductTitle}
 				onCreateProductDescription={onCreateProductDescription}
 				onCreateProductPrice={onCreateProductPrice}

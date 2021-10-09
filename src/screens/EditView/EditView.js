@@ -12,9 +12,9 @@ const EditView = (props) => {
 				placeholderDescription={props.editDescription}
 				placeholderPrice={props.editPrice}
 				onSave={props.onSave}
-				onChangeProductTitle={props.onEditProductTitle}
-				onChangeProductDescription={props.onEditProductDescription}
-				onChangeProductPrice={props.onEditProductPrice}
+				onChangeProductTitle={props.onChangeProductTitle}
+				onChangeProductDescription={props.onChangeProductDescription}
+				onChangeProductPrice={props.onChangeProductPrice}
 			/>
 		</div>
 	);
