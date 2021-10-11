@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../../components/Form/Form';
+import ProductForm from '../../components/ProductForm/ProductForm';
 import './EditView.css';
 import Title from '../../components/Title/Title';
 
@@ -7,7 +7,7 @@ const EditView = (props) => {
 	return (
 		<div className='wrapper'>
 			<Title title='Edit Product' />
-			<Form
+			<ProductForm
 				placeholderTitle={props.editTitle}
 				placeholderDescription={props.editDescription}
 				placeholderPrice={props.editPrice}

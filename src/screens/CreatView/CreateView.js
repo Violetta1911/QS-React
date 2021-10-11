@@ -1,5 +1,5 @@
 import React from 'react';
-import Form from '../../components/Form/Form';
+import ProductForm from '../../components/ProductForm/ProductForm';
 import './CreateView.css';
 import Title from '../../components/Title/Title';
 
@@ -7,7 +7,7 @@ const CreateView = (props) => {
 	return (
 		<div className='wrapper'>
 			<Title title='Create Product' />
-			<Form
+			<ProductForm
 				placeholderTitle='title'
 				placeholderDescription='description'
 				placeholderPrice='price'

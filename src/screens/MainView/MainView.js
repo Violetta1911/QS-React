@@ -2,7 +2,7 @@ import './MainView.css';
 import Product from '../../components/Product/Product';
 import Button from '../../components/Button/Button';
 import Pagination from '../../components/Pagination/Pagination';
-import React, { Component } from 'react';
+import React, { useState, useMemo } from 'react';
 
 const MainView = ({
 	products,
@@ -12,10 +12,21 @@ const MainView = ({
 	onCreate,
 	onGoToBasket,
 }) => {
+	let PageSize = 10;
+
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const currentTableData = useMemo(() => {
+		const firstPageIndex = (currentPage - 1) * PageSize;
+		const lastPageIndex = firstPageIndex + PageSize;
+
+		return products.slice(firstPageIndex, lastPageIndex);
+	}, [currentPage]);
+
 	return (
 		<div className='wrapper'>
 			<div className='productList'>
-				{products.map((product) => (
+				{currentTableData.map((product) => (
 					<Product
 						product={product}
 						buttonsClassName='productButtons'
@@ -30,6 +41,12 @@ const MainView = ({
 						}
 					/>
 				))}
+				<Pagination
+					currentPage={currentPage}
+					totalCount={products.length}
+					pageSize={PageSize}
+					onPageChange={(page) => setCurrentPage(page)}
+				/>
 			</div>
 			<Button className='buttonCreate' title='Create' onClick={onCreate} />
 			<Button className='buttonCreate' title='Basket' onClick={onGoToBasket} />

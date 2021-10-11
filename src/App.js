@@ -15,6 +15,7 @@ const App = () => {
 	const [editTitle, setEditTitle] = useState('');
 	const [editDescription, setEditDescription] = useState('');
 	const [editPrice, setEditPrice] = useState('');
+	const [count, setCount] = useState(0);
 
 	useEffect(() => {
 		getProducts();
@@ -27,11 +28,10 @@ const App = () => {
 		setProducts(data);
 	}
 
-	const createEditForm = (key) => {
-		const editProduct = products.find((item) => item.id === key);
-		setEditTitle(editProduct.title);
-		setEditDescription(editProduct.description);
-		setEditPrice(editProduct.price);
+	const setUpdateProduct = (product) => {
+		setEditTitle(product.title);
+		setEditDescription(product.description);
+		setEditPrice(product.price);
 	};
 
 	const addToBasket = (key) => {
@@ -82,11 +82,17 @@ const App = () => {
 	const onAdd = (event, key) => {
 		event.preventDefault();
 		addToBasket(key);
+		setCount(1);
 	};
 
 	const onCreate = (event) => {
 		event.preventDefault();
 		setScreen('create');
+	};
+
+	const createEditForm = (key) => {
+		const productToEdit = products.find((item) => item.id === key);
+		setUpdateProduct(productToEdit);
 	};
 
 	const saveNewProduct = (event) => {
@@ -136,49 +142,63 @@ const App = () => {
 		event.preventDefault();
 		setNewProductPrice(event.target.value);
 	};
+	const onPlus = () => setCount(count + 1);
+	const onMinus = () => (count >= 1 ? setCount(count - 1) : 1);
+	const deleteFromBasket = () => setBasket([]);
 
 	let content;
 
-	if (screen === 'main') {
-		content = (
-			<MainView
-				products={products}
-				onEdit={onEdit}
-				onDel={onDel}
-				onAdd={onAdd}
-				onCreate={onCreate}
-				onGoToBasket={onGoToBasket}
-			/>
-		);
-	}
-
-	if (screen === 'edit') {
-		content = (
-			<EditView
-				editTitle={editTitle}
-				editDescription={editDescription}
-				editPrice={editPrice}
-				onSave={editProduct}
-				onChangeProductTitle={editProductTitle}
-				onChangeProductDescription={editProductDescription}
-				onChangeProductPrice={editProductPrice}
-			/>
-		);
-	}
-
-	if (screen === 'cart') {
-		content = <CartView basket={basket} />;
-	}
-
-	if (screen === 'create') {
-		content = (
-			<CreateView
-				onSave={saveNewProduct}
-				onCreateProductTitle={onCreateProductTitle}
-				onCreateProductDescription={onCreateProductDescription}
-				onCreateProductPrice={onCreateProductPrice}
-			/>
-		);
+	switch (screen) {
+		case 'main':
+			content = (
+				<MainView
+					products={products}
+					onEdit={onEdit}
+					onDel={onDel}
+					onAdd={onAdd}
+					onCreate={onCreate}
+					onGoToBasket={onGoToBasket}
+				/>
+			);
+			break;
+		case 'edit':
+			{
+				content = (
+					<EditView
+						editTitle={editTitle}
+						editDescription={editDescription}
+						editPrice={editPrice}
+						onSave={editProduct}
+						onChangeProductTitle={editProductTitle}
+						onChangeProductDescription={editProductDescription}
+						onChangeProductPrice={editProductPrice}
+					/>
+				);
+			}
+			break;
+		case 'create':
+			{
+				content = (
+					<CreateView
+						onSave={saveNewProduct}
+						onCreateProductTitle={onCreateProductTitle}
+						onCreateProductDescription={onCreateProductDescription}
+						onCreateProductPrice={onCreateProductPrice}
+					/>
+				);
+			}
+			break;
+		case 'cart': {
+			content = (
+				<CartView
+					basket={basket}
+					count={count}
+					onPlus={onPlus}
+					onMinus={onMinus}
+					deleteFromBasket={deleteFromBasket}
+				/>
+			);
+		}
 	}
 
 	return <div className='App'>{content}</div>;

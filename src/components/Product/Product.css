@@ -1,5 +1,5 @@
 .product {
-    width: 300px;
+    width: 250px;
     padding: 5px;
     margin: 0 10px 20px 0;
 
@@ -16,6 +16,7 @@
     margin-bottom: 20px;
     font-size: 14px;
     font-style: italic;
+    word-wrap: break-word;
 }
 .price {
     margin-bottom: 40px;
